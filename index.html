@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西财AGI实验室-数字人生成测试网站</title>
+    <style>
+        body {
+            padding-top: 4.5rem;
+        }
+    </style>
+
+    <title>上传和下载视频</title>
+    <!-- 引入Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 引入Bootstrap的CSS和JavaScript文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"></script>
+
+    <!-- 引入jQuery库 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+
+    <style>
+        .carousel-item img {
+            height: 400px; /* set the height of the carousel images to 400px */
+            object-fit: cover; /* use object-fit to fill the carousel item with the image */
+        }
+
+        /* Set the background color of the page */
+        body {
+            background-color: #f8f9fa;
+        }
+
+        /* Center the container element on the page */
+        .container {
+            margin-top: 100px; /* add a top margin of 100px to create a gap between the .container and #carousel elements */
+            background-color: rgba(255, 255, 255, 0.3); /* set the background color to white with 30% opacity */
+            z-index: -1; /* set the z-index to -1 to position it behind the .container module */
+        }
+
+        .custom-container {
+            max-width: 1920px; /* Set your desired max width here */
+            margin: 0 auto; /* Center the container horizontally */
+        }
+
+        /* Style the upload container */
+        .upload-container {
+            border: 2px dashed #ccc;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .upload-container p {
+            margin-bottom: 1rem;
+        }
+
+        .file-label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        /* Style the form container */
+        .form-container {
+            margin-top: 1rem;
+        }
+
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container label {
+            margin-bottom: 0.5rem;
+        }
+
+        .submit-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #0069d9;
+        }
+
+        .download-btn {
+            display: block;
+            margin-top: 1rem;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Style the text input section */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .form-control:focus {
+            color: #495057;
+            background-color: #fff;
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+        }
+
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .generate-task-btn {
+            background-color: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .generate-task-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">西财AGI实验室-数字人生成测试网站</span>
+    </div>
+</nav>
+
+<div id="app">
+    <div id="app">
+        <div id="carousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel" data-slide-to="1"></li>
+                <li data-target="#carousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://picsum.photos/1920/720?random=1" class="d-block w-100" alt="Slide 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://picsum.photos/1920/720?random=2" class="d-block w-100" alt="Slide 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://picsum.photos/1920/720?random=3" class="d-block w-100" alt="Slide 3">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="upload-container" @dragover.prevent @drop="onDrop">
+                        <p>将视频文件拖放到此处或者</p>
+                        <label for="file-input" class="file-label">选择文件</label>
+                        <input type="file" id="file-input" ref="video" @change="onFileChange">
+                    </div>
+                    <div class="form-container">
+                        <form @submit.prevent="uploadVideo">
+                            <label for="file-input" class="file-label">{{ fileName || '选择文件' }}</label>
+                            <button type="submit" class="submit-btn" :disabled="!video">上传</button>
+                            <button type="button" class="generate-task-btn" @click="generateTask">合成声音模型</button>
+                            <div class="progress-bar-container" v-if="showProgressBar">
+                                <div class="progress-bar" :style="{ width: progress + '%' }"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="video-container">
+                        <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360">
+                            <source src="path/to/video.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">文本输入框</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <button type="button" class="submit-btn" onclick="uploadText()">提交并生成视频</button>
+                        <a :href="downloadUrl" download class="download-btn" v-if="downloadUrl">下载视频</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 自动滚动
+    $(document).ready(function(){
+        $('#carousel').carousel({
+            interval: 3000 // 每张图片停留的时间，单位为毫秒
+        });
+    });
+</script>
+
+<script>
+    var player = videojs('my-video');
+</script>
+
+<script>
+
+    // Vue.js实例
+    new Vue({
+        el: '#app',
+        data: {
+            video: null, // 上传的视频文件
+            fileName: '', // 上传的视频文件名
+            downloadToken: '' // 下载视频的Token
+        },
+        computed: {
+            // 动态生成下载视频的URL
+            downloadUrl() {
+                return '/download?token=' + this.downloadToken;
+            }
+        },
+        methods: {
+            onDrop(e) {
+                e.preventDefault();
+                const files = e.dataTransfer.files;
+                if (files.length) {
+                    this.video = files[0];
+                    this.fileName = this.video.name;
+                }
+            },
+            onFileChange(e) {
+                const files = e.target.files;
+                if (files.length) {
+                    this.video = files[0];
+                    this.fileName = this.video.name;
+                }
+            },
+            // 上传视频
+            uploadVideo() {
+                let formData = new FormData();
+                formData.append('video', this.video);
+                fetch('http://10.108.220.19/upload_video', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            this.downloadUrl = `http://10.108.220.19/download_video?token=${data.token}`;
+                            alert('上传成功！');
+                        } else {
+                            alert('上传失败：' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        alert('网络错误：' + error.message);
+                    });
+            },
+
+            uploadText: function() {
+                // Send the text to the server using an AJAX request
+                // Here is an example using Axios:
+                axios.post("http://10.108.220.19/upload-text", { text: this.text })
+                    .then(function(response) {
+                        console.log("Text uploaded successfully");
+                    })
+                    .catch(function(error) {
+                        console.log("Error uploading text: " + error);
+                    });
+            }
+        }
+    });
+</script>
+<script>
+    export default {
+        data() {
+            return {
+                fileName: '',
+                video: null,
+                showProgressBar: false,
+                progress: 0
+            }
+        },
+        methods: {
+            async generateTask() {
+                // Send a request to the backend to initiate the video task generation process
+                const response = await axios.post('/api/generate-task', { video: this.video })
+
+                // Update the progress bar based on the response
+                if (response.data.taskId) {
+                    this.showProgressBar = true
+                    this.updateProgress(response.data.taskId)
+                }
+            },
+            async updateProgress(taskId) {
+                // Send a request to the backend to check the progress of the task
+                const response = await axios.get(`/api/check-progress/${taskId}`)
+
+                // Update the progress bar based on the response
+                if (response.data.progress) {
+                    this.progress = response.data.progress
+                    setTimeout(() => {
+                        this.updateProgress(taskId)
+                    }, 1000) // Update the progress every 1 second
+                } else {
+                    // Hide the progress bar when the task is complete
+                    this.showProgressBar = false
+                }
+            },
+            onDrop(e) {
+                e.preventDefault()
+                this.video = e.dataTransfer.files[0]
+                this.fileName = this.video.name
+            },
+            onFileChange(e) {
+                this.video = e.target.files[0]
+                this.fileName = this.video.name
+            },
+            async uploadVideo() {
+                // Create a new FormData object and append the video file to it
+                const formData = new FormData()
+                formData.append('video', this.video)
+
+                // Send a POST request to the backend to upload the video file
+                await axios.post('/api/upload-video', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+            }
+        }
+    }
+</script>
+</body>
+</html>
